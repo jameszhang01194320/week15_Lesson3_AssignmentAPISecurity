@@ -3,7 +3,7 @@ from datetime import datetime, timedelta, timezone
 from functools import wraps
 from flask import request, jsonify
 
-SECRET_KEY = 'super_secert_secrets'
+SECRET_KEY = 'my_secert_token'
 
 def encode_token(user_id): #original
     payload = {
