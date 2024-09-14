@@ -64,7 +64,7 @@ def login(credentials):
     customer = db.session.execute(query).scalar_one_or_none()
 
     if customer and customer.password == credentials['password']: #if there is a customer, check their password
-        auth_token = encode_role_token(customer.id, customer.admin)
+        auth_token = encode_token(customer.id, customer.admin)
         return auth_token
     
     return None

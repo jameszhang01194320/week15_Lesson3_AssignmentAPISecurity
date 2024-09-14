@@ -2,7 +2,7 @@ from database import db #services interact directly with the db
 from models.customer import Customer #need this to create customer objects
 from sqlalchemy import select#so we can query our db
 
-from utils.util import encode_role_token 
+from utils.util import encode_token 
 
 
 def save(customer_data):
@@ -26,7 +26,7 @@ def login(credentials):
     customer = db.session.execute(query).scalar_one_or_none()
 
     if customer and customer.password == credentials['password']: #if there is a customer, check their password
-        auth_token = encode_role_token(customer.id, customer.admin)
+        auth_token = encode_token(customer.id)
         return auth_token
     
     return None

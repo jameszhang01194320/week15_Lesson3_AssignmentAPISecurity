@@ -3,7 +3,6 @@ from models.schemas.orderSchema import order_schema, orders_schema
 from services import orderService
 from marshmallow import ValidationError
 
-from utils.util import user_validation
 
 
 def save(token_id):
@@ -28,12 +27,12 @@ def find_by_id(order_id): #dynamic route takes in parameters
     return order_schema.jsonify(order), 200
 
 
-def find_by_customer_id(customer_id, token_id):
-    if customer_id == token_id:
-        orders = orderService.find_by_customer_id(customer_id)
-        return orders_schema.jsonify(orders), 200
-    else:
-        return jsonify({"message": "Cannot view other customers orders!"}), 401
+def find_by_customer_id(customer_id):
+    orders = orderService.find_by_customer_id(customer_id)
+    if not orders:
+        return jsonify({"message": "No orders found for this customer"}), 404
+    return orders_schema.jsonify(orders), 200
+
 
 def find_by_email():
     email = request.json['email']
